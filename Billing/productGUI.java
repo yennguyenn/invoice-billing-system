@@ -1318,7 +1318,7 @@ pstmt = conn.prepareStatement(insertQuery);
 }
     private void bathroomAccessoriesBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bathroomAccessoriesBtnActionPerformed
     jPanel6.removeAll();
-    jPanel6.setLayout(new GridLayout(5,3));
+    jPanel6.setLayout(new GridLayout(3, 4));
     Connection conn = null;
     PreparedStatement pstmt = null;
     ResultSet rs = null;
@@ -1328,7 +1328,7 @@ pstmt = conn.prepareStatement(insertQuery);
       ImageIcon image=new ImageIcon("C:\\INVOICE BILLING SYSTEM\\src\\bathroomStuffs\\Wall Mounted Bathroom Trays Cosmetic Storage Rack for Home Toilet Bathroom Accessories.png");
        
     Class.forName("com.microsoft.sqlserver.jdbc.SQLServerDriver");
-    String url = "jdbc:sqlserver://localhost:1433;databaseName=MOONHOUSE;user=sa;password=123456;encrypt=true;trustServerCertificate=true";
+    String url = "jdbc:sqlserver://localhost:1433;databaseName=MOONHOUSE;user=sa;password=yennguyen@;encrypt=true;trustServerCertificate=true";
     conn = DriverManager.getConnection(url);
     String sql = "SELECT price,productID,Name,activate,category,supplier FROM PRODUCTS WHERE category='Bathroom'";
     pstmt = conn.prepareStatement(sql);
@@ -1340,6 +1340,7 @@ pstmt = conn.prepareStatement(insertQuery);
         double price = rs.getDouble("price");
         String activate=rs.getString("activate");
         JButton button = new JButton(name);
+        button.setSize(50, 50);
 
         button.addActionListener(new ActionListener() {
             @Override
@@ -1348,8 +1349,8 @@ pstmt = conn.prepareStatement(insertQuery);
                     JOptionPane.showMessageDialog(null, "ENTER THE CUSTOMER NAME!");
                 }
                 else{
-                    if(removeSpaces(activate).equals(removeSpaces("Yes"))){
-                int existingRow = -1;
+                    if (activate.toLowerCase().contains(removeSpaces("yes"))) {
+                        int existingRow = -1;
                 for (int i = 0; i < model.getRowCount(); i++) {
                     if (name.equals(model.getValueAt(i, 0))) {
                    
@@ -1391,8 +1392,7 @@ pstmt = conn.prepareStatement(insertQuery);
     }
 }
    
-    }//GEN-LAST:event_bathroomAccessoriesBtnActionPerformed
-
+    }
     @SuppressWarnings("empty-statement")
     private void formWindowOpened(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowOpened
 
