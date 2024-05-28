@@ -369,7 +369,12 @@ public static String removeSpaces(String str) {
 
     private void historyBtn1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_historyBtn1ActionPerformed
         new dataOptions().setVisible(true);
-    }//GEN-LAST:event_historyBtn1ActionPerformed
+    }
+    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {                                         
+        // TODO add your handling code here:
+        new createAccount().setVisible(true);
+    }                                       
+    //GEN-LAST:event_historyBtn1ActionPerformed
 
     /**
      * @param args the command line arguments
