@@ -42,7 +42,7 @@
     </Component>
   </NonVisualComponents>
   <Properties>
-    <Property name="defaultCloseOperation" type="int" value="3"/>
+    <Property name="defaultCloseOperation" type="int" value="2"/>
   </Properties>
   <SyntheticProperties>
     <SyntheticProperty name="formSizePolicy" type="int" value="1"/>
@@ -115,8 +115,8 @@
                       <Component id="activateJ" min="-2" max="-2" attributes="0"/>
                       <Component id="nameF" min="-2" pref="414" max="-2" attributes="0"/>
                       <Component id="priceF" min="-2" pref="414" max="-2" attributes="0"/>
-                      <Component id="categoryF" min="-2" pref="414" max="-2" attributes="0"/>
                       <Component id="supplierF" min="-2" pref="414" max="-2" attributes="0"/>
+                      <Component id="jComboBox1" min="-2" max="-2" attributes="0"/>
                   </Group>
                   <EmptySpace pref="137" max="32767" attributes="0"/>
               </Group>
@@ -143,7 +143,7 @@
                   <EmptySpace type="separate" max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="3" attributes="0">
                       <Component id="jLabel5" linkSize="2" alignment="3" min="-2" max="-2" attributes="0"/>
-                      <Component id="categoryF" alignment="3" min="-2" max="-2" attributes="0"/>
+                      <Component id="jComboBox1" alignment="3" min="-2" max="-2" attributes="0"/>
                   </Group>
                   <EmptySpace min="-2" pref="28" max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="3" attributes="0">
@@ -221,8 +221,6 @@
         </Component>
         <Component class="javax.swing.JTextField" name="priceF">
         </Component>
-        <Component class="javax.swing.JTextField" name="categoryF">
-        </Component>
         <Component class="javax.swing.JTextField" name="supplierF">
         </Component>
         <Component class="javax.swing.JButton" name="jButton1">
@@ -235,6 +233,16 @@
           <Events>
             <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jButton1ActionPerformed"/>
           </Events>
+        </Component>
+        <Component class="javax.swing.JComboBox" name="jComboBox1">
+          <Properties>
+            <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
+              <Connection code="new javax.swing.DefaultComboBoxModel&lt;&gt;(new String[] { &quot;Bathroom&quot;, &quot;Living Room Decor&quot;, &quot;Kitchenware&quot;})" type="code"/>
+            </Property>
+          </Properties>
+          <AuxValues>
+            <AuxValue name="JavaCodeGenerator_TypeParameters" type="java.lang.String" value="&lt;String&gt;"/>
+          </AuxValues>
         </Component>
       </SubComponents>
     </Container>
