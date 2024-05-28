@@ -314,6 +314,7 @@ public class products extends javax.swing.JFrame {
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
        new dataOptions().setVisible(true);
+       this.dispose();
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
@@ -322,35 +323,46 @@ public class products extends javax.swing.JFrame {
 
     private void jTable1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTable1MouseClicked
        
-        DefaultTableModel model=(DefaultTableModel)jTable1.getModel();
-        int rowSelected =jTable1.getSelectedRow();
-        String name=(String) model.getValueAt(rowSelected,0);
-        try {
-                Connection conn=null;
-                PreparedStatement pstmt=null; 
-                Class.forName("com.microsoft.sqlserver.jdbc.SQLServerDriver");
-                
-                String url = "jdbc:sqlserver://localhost:1433;databaseName=MOONHOUSE;user=sa;password=123456;encrypt=true;trustServerCertificate=true";
-                
-                String sql = "SELECT quantity_sold, sale FROM Products " +
-             "JOIN sale ON Products.productID = sale.productID " +
-             "WHERE name = ?";
-                  
-                conn = DriverManager.getConnection(url);
-                pstmt=conn.prepareStatement(sql);
-                pstmt.setString(1,name);
-                ResultSet rs=pstmt.executeQuery();
-                while(rs.next())
-                {
-                int quantity = Integer.parseInt(rs.getString("quantity_sold"));
-                double sale=Double.parseDouble(rs.getString("sale"));
-                new sale(quantity,sale).setVisible(true);
-                 
-                }
-        }catch(ClassNotFoundException|SQLException e){
-            e.printStackTrace();
-            
+      DefaultTableModel model = (DefaultTableModel) jTable1.getModel();
+int rowSelected = jTable1.getSelectedRow();
+String name = (String) model.getValueAt(rowSelected, 0);
+
+try {
+    Connection conn = null;
+    PreparedStatement pstmt = null;
+    Class.forName("com.microsoft.sqlserver.jdbc.SQLServerDriver");
+
+    String url = "jdbc:sqlserver://localhost:1433;databaseName=MOONHOUSE;user=sa;password=123456;encrypt=true;trustServerCertificate=true";
+
+    String sql = "SELECT quantity_sold, sale FROM Products " +
+                 "JOIN sale ON Products.productID = sale.productID " +
+                 "WHERE name=?";
+
+    conn = DriverManager.getConnection(url);
+    pstmt = conn.prepareStatement(sql);
+    pstmt.setString(1, name);
+    ResultSet rs = pstmt.executeQuery();
+    while (rs.next()) {
+        String quantitySoldStr = rs.getString("quantity_sold");
+        String saleStr = rs.getString("sale");
+
+        if (quantitySoldStr != null && saleStr != null) {
+            try {
+                int quantity = Integer.parseInt(quantitySoldStr);
+                double sale = Double.parseDouble(saleStr);
+                new sale(quantity, sale).setVisible(true);
+            } catch (NumberFormatException e) {
+                System.out.println("Lỗi chuyển đổi chuỗi sang số: " + e.getMessage());
+                // Xử lý lỗi chuyển đổi nếu cần thiết
+            }
+        } else {
+            System.out.println("Dữ liệu trả về từ cơ sở dữ liệu là null.");
+            // Xử lý trường hợp dữ liệu là null nếu cần thiết
         }
+    }
+} catch (ClassNotFoundException | SQLException e) {
+    e.printStackTrace();
+}
        
     }//GEN-LAST:event_jTable1MouseClicked
 
