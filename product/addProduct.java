@@ -203,101 +203,103 @@ public class addProduct extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-         if (nameF.getText().isEmpty() || priceF.getText().isEmpty() || categoryF.getText().isEmpty()|| supplierF.getText().isEmpty()) {
+        if (nameF.getText().isEmpty() || priceF.getText().isEmpty() || supplierF.getText().isEmpty()) {
             JOptionPane.showMessageDialog(null, "PLEASE ENTER ALL THE FIELDS");
-        }
-
-       else {
+        } else {
 
             String name = nameF.getText().trim();
-            String  price = priceF.getText().trim();
-            String cateogry = categoryF.getText().trim();
+            String price = priceF.getText().trim();
+            String category = (String) jComboBox1.getSelectedItem();
             String supplier = supplierF.getText().trim();
-            String activate=(String) activateJ.getSelectedItem();
- 
+            String activate = (String) jComboBox1.getSelectedItem();
 
             Connection conn = null;
             PreparedStatement pstmt = null;
-            Statement statement=null;
-            ResultSet rs=null;
+            Statement statement = null;
+            ResultSet rs = null;
 
             try {
-              
+
                 // Tạo kết nối JDBC
                 Class.forName("com.microsoft.sqlserver.jdbc.SQLServerDriver");
                 String url = "jdbc:sqlserver://localhost:1433;databaseName=MOONHOUSE;user=sa;password=123456;encrypt=true;trustServerCertificate=true";
                 conn = DriverManager.getConnection(url);
-             
-                String findID="SELECT productID FROM Products";
-                statement=conn.createStatement();
-                rs=statement.executeQuery(findID);
+
+                String findID = "SELECT productID FROM Products";
+                statement = conn.createStatement();
+                rs = statement.executeQuery(findID);
                 int id;
                 int nextID;
-                int previousID=0;
-                boolean check=true;
-                if(!rs.next())
-                {
-                    id=1;
-                   
-                }
-                else
-                {
-                do
-                   { 
-                   nextID=rs.getInt("productID");
-                     if(nextID-previousID==1){
-                        previousID=nextID;
-                   } else{
-                         check=false;
-                     }
-                   }while(rs.next()&&check);
-                   if(check){
-                       id=nextID+1;
-                   }else{
-                       id=previousID+1;
-                   }
-                  
-                  
-              }
-              
+                int previousID = 0;
+                boolean check = true;
+                if (!rs.next()) {
+                    id = 1;
 
-   
+                } else {
+                    do {
+                        nextID = rs.getInt("productID");
+                        if (nextID - previousID == 1) {
+                            previousID = nextID;
+                        } else {
+                            check = false;
+                        }
+                    } while (rs.next() && check);
+                    if (check) {
+                        id = nextID + 1;
+                    } else {
+                        id = previousID + 1;
+                    }
+
+                }
+
                 String sql = "INSERT INTO Products(productID, name, price, category,supplier,activate) VALUES (?, ?, ?, ?,?,?)";
-            
-           
+
                 pstmt = conn.prepareStatement(sql);
-                pstmt.setInt(1,id);
+                pstmt.setInt(1, id);
                 pstmt.setString(2, name);
                 pstmt.setString(3, price);
-                pstmt.setString(4,supplier);
-                pstmt.setString(5,activate);
-                pstmt.setString(6,activate);
+                pstmt.setString(4, category);
+                pstmt.setString(5, supplier);
+                pstmt.setString(6, activate);
                 int rowsAffected = pstmt.executeUpdate();
 
                 if (rowsAffected > 0) {
-                    JOptionPane.showMessageDialog(null,"Dữ liệu đã được chèn thành công vào bảng customer.");
+                    JOptionPane.showMessageDialog(null, "Dữ liệu đã được chèn thành công vào bảng Products.");
                 } else {
-                   JOptionPane.showMessageDialog(null,"Không có dữ liệu nào được chèn vào bảng customer.");
+                    JOptionPane.showMessageDialog(null, "Không có dữ liệu nào được chèn vào bảng Products.");
                 }
+                String saleID = "Insert into sale (productID,quantity_sold,sale) VALUES(?,?,?) ";
+                pstmt = conn.prepareStatement(saleID);
+                pstmt.setInt(1, id);
+                pstmt.setLong(2, 0);
+                pstmt.setLong(3, 0);
 
-                // Tăng biến đếm cho lần chèn dữ liệu tiếp theo
+                rowsAffected = pstmt.executeUpdate();
+
+                if (rowsAffected > 0) {
+                    JOptionPane.showMessageDialog(null, "Dữ liệu đã được chèn thành công vào bảng sale.");
+                } else {
+                    JOptionPane.showMessageDialog(null, "Không có dữ liệu nào được chèn vào bảng sale.");
+                }
 
             } catch (ClassNotFoundException | SQLException e) {
                 e.printStackTrace();
             } finally {
                 // Đóng tài nguyên
                 try {
-                    if (pstmt != null)
+                    if (pstmt != null) {
                         pstmt.close();
-                    if (conn != null && !conn.isClosed())
+                    }
+                    if (conn != null && !conn.isClosed()) {
                         conn.close();
+                    }
                 } catch (SQLException e) {
                     e.printStackTrace();
                 }
             }
-            
-        
+
         }
+    }           
     }//GEN-LAST:event_jButton1ActionPerformed
 
     /**
