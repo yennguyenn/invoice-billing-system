@@ -1537,8 +1537,8 @@ pstmt = conn.prepareStatement(insertQuery);
                     JOptionPane.showMessageDialog(null, "ENTER THE CUSTOMER NAME!");
                 }
                 else{
-                    if(removeSpaces(activate).equals(removeSpaces("Yes"))){
-                int existingRow = -1;
+                    if (activate.toLowerCase().contains(removeSpaces("yes"))) {
+                        int existingRow = -1;
                 for (int i = 0; i < model.getRowCount(); i++) {
                     if (name.equals(model.getValueAt(i, 0))) {
                    
@@ -1583,7 +1583,7 @@ pstmt = conn.prepareStatement(insertQuery);
 
     private void jtxtTotalActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jtxtTotalActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jtxtTotalActionPerformed
+    }
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
        new menu().setVisible(true);
